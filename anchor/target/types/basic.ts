@@ -5,9 +5,9 @@
  * IDL can be found at `target/idl/basic.json`.
  */
 export type Basic = {
-  address: '6z68wfurCMYkZG51s1Et9BJEd9nJGUusjHXNt4dGbNNF'
+  address: 'Bqgso2hFGxdix41GTHmPf9L2zArPpKRJLP4uMKC4eRPt'
   metadata: {
-    name: 'basic'
+    name: 'ai_nft_generator'
     version: '0.1.0'
     spec: '0.1.0'
     description: 'Created with Anchor'
