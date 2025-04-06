@@ -4,14 +4,18 @@ use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
     metadata::{
-        create_master_edition_v3, create_metadata_accounts_v3, mpl_token_metadata::types::DataV2, CreateMasterEditionV3, CreateMetadataAccountsV3, Metadata},
+        create_master_edition_v3, create_metadata_accounts_v3, 
+        mpl_token_metadata::types::{DataV2, Creator}, 
+        CreateMasterEditionV3, CreateMetadataAccountsV3, Metadata
+    },
         token::{mint_to, MintTo, Mint, Token, TokenAccount},
 };
 
 declare_id!("Bqgso2hFGxdix41GTHmPf9L2zArPpKRJLP4uMKC4eRPt");
 
 #[program]
-pub mod ai_nft_generator {
+pub mod basic {
+
     use super::*;
 
     pub fn mint_nft(ctx: Context<MintNFT>, nft_name: String, nft_symbol: String, nft_uri: String) -> Result<()> {
@@ -25,6 +29,14 @@ pub mod ai_nft_generator {
                 authority: ctx.accounts.signer.to_account_info(),
             },
         ), 1)?;
+
+        let creators = vec![
+            Creator {
+                address: ctx.accounts.signer.key().clone(),
+                verified: true,
+                share: 100,
+            },
+        ];
 
         msg!("Creating metadata account");
 
@@ -46,7 +58,7 @@ pub mod ai_nft_generator {
                 symbol: nft_symbol, 
                 uri: nft_uri, 
                 seller_fee_basis_points: 0, 
-                creators: None, 
+                creators: Some(creators), 
                 collection: None, 
                 uses: None 
             }, 
@@ -91,7 +103,6 @@ pub struct MintNFT<'info> {
         mut,
         seeds = [b"metadata", token_metadata_program.key().as_ref(), mint_account.key().as_ref()],
         bump,
-        seeds::program = token_metadata_program.key()
     )]
     pub metadata_account: UncheckedAccount<'info>,
 
@@ -100,7 +111,6 @@ pub struct MintNFT<'info> {
         mut,
         seeds = [b"metadata", token_metadata_program.key().as_ref(), mint_account.key().as_ref(), b"edition"],
         bump,
-        seeds::program = token_metadata_program.key()
     )]
     pub edition_account: UncheckedAccount<'info>,
 
