@@ -11,7 +11,7 @@ use anchor_spl::{
         token::{mint_to, MintTo, Mint, Token, TokenAccount},
 };
 
-declare_id!("Bqgso2hFGxdix41GTHmPf9L2zArPpKRJLP4uMKC4eRPt");
+declare_id!("HFBzjWDJqt5ELfiB627uJYXeqw3e2AoMw1HczDtmYjcd");
 
 #[program]
 pub mod basic {
@@ -57,12 +57,12 @@ pub mod basic {
                 name: nft_name, 
                 symbol: nft_symbol, 
                 uri: nft_uri, 
-                seller_fee_basis_points: 0, 
+                seller_fee_basis_points: 10, 
                 creators: Some(creators), 
                 collection: None, 
                 uses: None 
             }, 
-                false, 
+                true, 
                 true, 
                 None
             )?;
@@ -101,7 +101,11 @@ pub struct MintNFT<'info> {
     /// CHECK: Validate address by deriving pda
     #[account(
         mut,
-        seeds = [b"metadata", token_metadata_program.key().as_ref(), mint_account.key().as_ref()],
+        seeds = [
+            b"metadata", 
+            token_metadata_program.key().as_ref(), 
+            mint_account.key().as_ref()
+            ],
         bump,
     )]
     pub metadata_account: UncheckedAccount<'info>,
