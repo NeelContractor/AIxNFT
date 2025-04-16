@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/basic.json`.
  */
 export type Basic = {
-  "address": "HFBzjWDJqt5ELfiB627uJYXeqw3e2AoMw1HczDtmYjcd",
+  "address": "DufXcNAW1JuDCG9Qhu1vfricUhUNSa81DjogqECrtUWb",
   "metadata": {
     "name": "basic",
     "version": "0.1.0",
@@ -28,6 +28,11 @@ export type Basic = {
       "accounts": [
         {
           "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mintAccount",
           "writable": true,
           "signer": true
         },
@@ -100,11 +105,6 @@ export type Basic = {
               }
             ]
           }
-        },
-        {
-          "name": "mintAccount",
-          "writable": true,
-          "signer": true
         },
         {
           "name": "associatedTokenAccount",

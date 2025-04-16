@@ -1,5 +1,5 @@
 {
-  "address": "HFBzjWDJqt5ELfiB627uJYXeqw3e2AoMw1HczDtmYjcd",
+  "address": "DufXcNAW1JuDCG9Qhu1vfricUhUNSa81DjogqECrtUWb",
   "metadata": {
     "name": "basic",
     "version": "0.1.0",
@@ -22,6 +22,11 @@
       "accounts": [
         {
           "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint_account",
           "writable": true,
           "signer": true
         },
@@ -94,11 +99,6 @@
               }
             ]
           }
-        },
-        {
-          "name": "mint_account",
-          "writable": true,
-          "signer": true
         },
         {
           "name": "associated_token_account",

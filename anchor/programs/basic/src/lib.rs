@@ -11,7 +11,7 @@ use anchor_spl::{
         token::{mint_to, MintTo, Mint, Token, TokenAccount},
 };
 
-declare_id!("HFBzjWDJqt5ELfiB627uJYXeqw3e2AoMw1HczDtmYjcd");
+declare_id!("DufXcNAW1JuDCG9Qhu1vfricUhUNSa81DjogqECrtUWb");
 
 #[program]
 pub mod basic {
@@ -98,6 +98,16 @@ pub struct MintNFT<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
 
+    // create a new NFT mint
+    #[account(
+        init,
+        payer = signer,
+        mint::decimals = 0,
+        mint::authority = signer.key(),
+        mint::freeze_authority = signer.key()
+    )]
+    pub mint_account: Account<'info, Mint>,
+
     /// CHECK: Validate address by deriving pda
     #[account(
         mut,
@@ -117,16 +127,6 @@ pub struct MintNFT<'info> {
         bump,
     )]
     pub edition_account: UncheckedAccount<'info>,
-
-    // create a new NFT mint
-    #[account(
-        init,
-        payer = signer,
-        mint::decimals = 0,
-        mint::authority = signer.key(),
-        mint::freeze_authority = signer.key()
-    )]
-    pub mint_account: Account<'info, Mint>,
 
     // create Assoicates token account for nft, if needed
     #[account(
