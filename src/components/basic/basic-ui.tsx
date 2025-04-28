@@ -3,11 +3,10 @@
 import { useBasicProgram } from './basic-data-access'
 
 export function BasicCreate() {
-  const { greet } = useBasicProgram()
-
+  const { MintNFT } = useBasicProgram()
   return (
-    <button className="btn btn-xs lg:btn-md btn-primary" onClick={() => greet.mutateAsync()} disabled={greet.isPending}>
-      Run program{greet.isPending && '...'}
+    <button className="btn btn-xs lg:btn-md btn-primary" onClick={() => MintNFT.mutateAsync({ name: 'test', symbol: 'test', uri: 'test' })} disabled={MintNFT.isPending}>
+      Run program{MintNFT.isPending && '...'}
     </button>
   )
 }
@@ -31,3 +30,12 @@ export function BasicProgram() {
     </div>
   )
 }
+
+export function BasicMint() {
+  const { MintNFT } = useBasicProgram()
+  return (
+    <button className="btn btn-xs lg:btn-md btn-primary" onClick={() => MintNFT.mutateAsync({ name: 'test', symbol: 'test', uri: 'test' })} disabled={MintNFT.isPending}>
+      Mint NFT{MintNFT.isPending && '...'}
+    </button>
+  )
+} 

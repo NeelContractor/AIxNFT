@@ -10,6 +10,7 @@ use anchor_spl::{
     },
         token::{mint_to, MintTo, Mint, Token, TokenAccount},
 };
+use anchor_spl::metadata::mpl_token_metadata;
 
 declare_id!("DufXcNAW1JuDCG9Qhu1vfricUhUNSa81DjogqECrtUWb");
 
@@ -57,12 +58,12 @@ pub mod basic {
                 name: nft_name, 
                 symbol: nft_symbol, 
                 uri: nft_uri, 
-                seller_fee_basis_points: 10, 
+                seller_fee_basis_points: 0, 
                 creators: Some(creators), 
                 collection: None, 
                 uses: None 
             }, 
-                true, 
+                false, 
                 true, 
                 None
             )?;
@@ -108,23 +109,17 @@ pub struct MintNFT<'info> {
     )]
     pub mint_account: Account<'info, Mint>,
 
-    /// CHECK: Validate address by deriving pda
+    /// CHECK: This account is not validated by anchor but by metadata program
     #[account(
         mut,
-        seeds = [
-            b"metadata", 
-            token_metadata_program.key().as_ref(), 
-            mint_account.key().as_ref()
-            ],
-        bump,
+        address = find_metadata_account(&mint_account.key()).0
     )]
     pub metadata_account: UncheckedAccount<'info>,
 
-    /// CHECK: Validate address by deriving pda
-    #[account(
+     /// CHECK: This account is not validated by anchor but by metadata program
+     #[account(
         mut,
-        seeds = [b"metadata", token_metadata_program.key().as_ref(), mint_account.key().as_ref(), b"edition"],
-        bump,
+        address = find_master_edition_account(&mint_account.key()).0
     )]
     pub edition_account: UncheckedAccount<'info>,
 
@@ -142,4 +137,27 @@ pub struct MintNFT<'info> {
     pub associated_token_program: Program<'info, AssociatedToken>,
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
+}
+
+pub fn find_metadata_account(mint: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            b"metadata",
+            &mpl_token_metadata::ID.to_bytes(),
+            &mint.to_bytes(),
+        ],
+        &mpl_token_metadata::ID,
+    )
+}
+
+pub fn find_master_edition_account(mint: &Pubkey) -> (Pubkey, u8) {
+    Pubkey::find_program_address(
+        &[
+            b"metadata",
+            &mpl_token_metadata::ID.to_bytes(),
+            &mint.to_bytes(),
+            b"edition",
+        ],
+        &mpl_token_metadata::ID,
+    )
 }

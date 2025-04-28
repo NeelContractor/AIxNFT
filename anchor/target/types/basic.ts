@@ -38,73 +38,11 @@ export type Basic = {
         },
         {
           "name": "metadataAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  109,
-                  101,
-                  116,
-                  97,
-                  100,
-                  97,
-                  116,
-                  97
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "tokenMetadataProgram"
-              },
-              {
-                "kind": "account",
-                "path": "mintAccount"
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "editionAccount",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  109,
-                  101,
-                  116,
-                  97,
-                  100,
-                  97,
-                  116,
-                  97
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "tokenMetadataProgram"
-              },
-              {
-                "kind": "account",
-                "path": "mintAccount"
-              },
-              {
-                "kind": "const",
-                "value": [
-                  101,
-                  100,
-                  105,
-                  116,
-                  105,
-                  111,
-                  110
-                ]
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "associatedTokenAccount",

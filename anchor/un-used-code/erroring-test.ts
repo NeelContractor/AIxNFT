@@ -1,11 +1,15 @@
+/*  this test was the first test that I did, it was erroring out because the metadata program id was wrong 
+
 import * as anchor from '@coral-xyz/anchor'
 import { Basic } from "../target/types/basic"
 import { Keypair, PublicKey, SystemProgram, SYSVAR_RENT_PUBKEY } from '@solana/web3.js';
 import { ASSOCIATED_TOKEN_PROGRAM_ID, getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID, createMint } from '@solana/spl-token';
 import "dotenv/config"
+import BasicIDL from "../target/idl/basic.json"; 
 
 // const PROGRAM_ID = new PublicKey("HFBzjWDJqt5ELfiB627uJYXeqw3e2AoMw1HczDtmYjcd");
 const METADATA_PROGRAM_ID = new PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s');
+const SEEDS_PROGRAM_ID = new PublicKey(BasicIDL.address);
 
 
 describe("NFTxAI", () => {
@@ -16,7 +20,8 @@ describe("NFTxAI", () => {
     const program = anchor.workspace.Basic as anchor.Program<Basic>;
 
     const payer = Keypair.fromSecretKey(
-        Uint8Array.from(process.env.SECRET_KEY!)
+        // Uint8Array.from(process.env.SECRET_KEY!)
+        Uint8Array.from([249, 209, 127, 202, 229, 193, 116, 99, 211, 186, 102, 100, 164, 66, 190, 54, 20, 21, 43, 238, 52, 98, 140, 117, 105, 178, 239, 196, 147, 49, 126, 60, 5, 139, 194, 81, 250, 187, 9, 181, 24, 7, 47, 250, 165, 48, 195, 120, 141, 207, 42, 126, 228, 254, 241, 79, 121, 249, 170, 108, 147, 71, 249, 214])
       );
 
     const name = 'Homer NFT 2';
@@ -30,7 +35,7 @@ describe("NFTxAI", () => {
             METADATA_PROGRAM_ID.toBuffer(),
             mint.toBuffer(),
           ],
-          METADATA_PROGRAM_ID
+          SEEDS_PROGRAM_ID
         );
         return pda;
       };
@@ -43,7 +48,7 @@ describe("NFTxAI", () => {
             mint.toBuffer(),
             Buffer.from("edition"),
           ],
-          METADATA_PROGRAM_ID
+          SEEDS_PROGRAM_ID
         );
         return pda;
       };
@@ -91,3 +96,5 @@ describe("NFTxAI", () => {
         console.log("Signature: ", signature);
     })
 })
+
+*/
