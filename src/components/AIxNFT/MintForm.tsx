@@ -63,8 +63,6 @@ export default function MintForm() {
             );
             console.log("📦 Associated Token Account:", nftAta.toBase58());
 
-
-            // Step 3: Derive Metadata PDA
             const [metadataPda] = PublicKey.findProgramAddressSync(
               [
                 Buffer.from("metadata"),
@@ -75,7 +73,6 @@ export default function MintForm() {
             );
             console.log("📝 Metadata PDA:", metadataPda.toBase58());
 
-            // Step 4: Derive Master Edition PDA
             const [editionPda] = PublicKey.findProgramAddressSync(
               [
                 Buffer.from("metadata"),
@@ -102,11 +99,10 @@ export default function MintForm() {
                 rent: SYSVAR_RENT_PUBKEY,
               } as any)
               .signers([mint])
-              .instruction(); // This returns a single instruction, not a transaction
+              .instruction(); 
 
               console.log("Instruction:", txSignature);
 
-              // Now, create the transaction
               const transaction = new Transaction().add(txSignature);
 
               const txid = await sendTransaction(transaction, connection, { skipPreflight: true });
